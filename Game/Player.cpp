@@ -8,7 +8,7 @@ Player::Player(float _x,float _y,float w,float h)
 	player_w = w;
 	player_h = h;
 
-	sprite = new Sprite(x, y, w,h);
+	sprite = new Sprite(x, y, w,h,DYNAMIC_DRAW);
 }
 
 Player::~Player()
