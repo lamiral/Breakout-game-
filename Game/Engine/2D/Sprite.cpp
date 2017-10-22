@@ -1,12 +1,14 @@
 #include "Sprite.h"
 
-Sprite::Sprite(float _x, float _y, float _w,float _h)
+Sprite::Sprite(float _x, float _y, float _w,float _h,DRAW_TYPE type)
 {
 	this->x = _x;
 	this->y = _y;
 	
 	w = _w;
 	h = _h;
+
+	draw_type = type;
 
 	rect = nullptr;
 	texture = 0;
@@ -16,7 +18,7 @@ Sprite::Sprite(float _x, float _y, float _w,float _h)
 
 Sprite::~Sprite()
 {
-	delete rect;
+	freeResources();
 }
 
 void Sprite::draw()
@@ -24,7 +26,7 @@ void Sprite::draw()
 	rect->x = this->x;
 	rect->y = this->y;
 
-	rect->init_with_texture();
+	if(draw_type == DYNAMIC_DRAW) rect->init_with_texture();
 
 	glBindTexture(GL_TEXTURE_2D, texture);
 		rect->draw();
@@ -44,4 +46,12 @@ void Sprite::setTexture(GLuint _texture)
 void Sprite::setRect(Rect *r)
 {
 	rect = r;
+}
+
+void Sprite::freeResources()
+{
+	glDeleteTextures(1, &texture);
+	rect->freeResources();
+
+	delete rect;
 }

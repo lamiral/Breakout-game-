@@ -2,12 +2,15 @@
 
 #include "GL/glew.h"
 #include "GLFW\glfw3.h"
+#include <sstream>
+#include <string>
 
-#include "InputManager.h"
-#include "Player.h"
+#include "Engine/2D/Sprite.h"
 #include "Engine/Shaders/Shader.h"
 #include "Engine/Utils/Random.h"
-#include "Sands.h"
+#include "InputManager.h"
+#include "Player.h"
+#include "Breakouts.h"
 
 #include "glm/glm.hpp"
 #include "glm/vec3.hpp"
@@ -20,6 +23,7 @@ struct Ball
 {
 	Sprite *sprite;
 
+	float accel;
 	float speed_x, speed_y;
 	float w, h;
 };
@@ -34,9 +38,10 @@ private:
 	Player *player;
 	Ball *ball;
 	Sprite *background;
-	Sands *sands;
+	Breakouts *breakouts;
 
 	int w, h;
+	int lvl;
 
 	glm::mat4 Ortho;
 
@@ -47,6 +52,9 @@ private:
 
 	void chek_collision();
 
+	void startInit();
+
+	void playerKey();
 public:
 
 	GameManager(int w, int h,GLFWwindow *window);
